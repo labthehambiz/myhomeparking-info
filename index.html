@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>마이홈파킹 My Home Parking | 더함비즈</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --asphalt:#252B30; --asphalt-2:#2F363C; --line:#F4F6F5; --teal:#1BB8B3; --teal-ink:#0E7C78; --green:#3DDC84;
+  --amber:#FFB81C; --concrete:#E7EAE9; --bg:#FFFFFF; --card:#FFFFFF; --ink:#1E2327; --muted:#5B6570;
+  --display:"Black Han Sans","IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){ --bg:#1A1F23; --card:#22282D; --ink:#EEF1F0; --muted:#A3ADB5; --concrete:#20262A; --teal-ink:#4FD6D1; } }
+:root[data-theme="dark"]{ --bg:#1A1F23; --card:#22282D; --ink:#EEF1F0; --muted:#A3ADB5; --concrete:#20262A; --teal-ink:#4FD6D1; }
+html{scroll-padding-top:env(safe-area-inset-top,0px); scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.65}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 1.5rem}
+
+header{background:var(--asphalt);color:var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.5rem;max-width:1120px;margin:0 auto}
+.logo{display:flex;align-items:baseline;gap:.5rem;font-family:var(--display);font-size:1.35rem;text-decoration:none}
+.logo small{font-family:var(--body);font-size:.8rem;opacity:.65;font-weight:500}
+nav{display:flex;gap:1.5rem;font-size:.95rem}
+nav a{text-decoration:none;opacity:.85}
+nav a:hover{opacity:1;color:var(--teal)}
+@media (max-width:720px){nav{display:none}}
+
+.hero{background:var(--asphalt);color:var(--line);padding:4.5rem 0 4rem}
+.hero .brand{font-family:var(--display);color:var(--teal);font-size:1.1rem;margin:0 0 1rem}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(2.3rem,5.6vw,4.2rem);line-height:1.14;margin:0 0 1.25rem;max-width:18ch}
+.hero p{max-width:46ch;font-size:1.1rem;opacity:.85;margin:0 0 2rem}
+.btns{display:flex;flex-wrap:wrap;gap:.75rem}
+.call{display:inline-flex;align-items:center;gap:.75rem;background:var(--amber);color:var(--asphalt);text-decoration:none;font-weight:700;padding:.9rem 1.4rem;border-radius:4px}
+.call b{font-family:var(--display);font-weight:400;font-size:1.3rem}
+.call:hover{background:#FFC94D}
+.ghost{display:inline-flex;align-items:center;padding:.9rem 1.4rem;border:2px solid rgba(244,246,245,.4);border-radius:4px;text-decoration:none;font-weight:500}
+.ghost:hover{border-color:var(--line)}
+.lanes{height:12px;background:repeating-linear-gradient(90deg,var(--amber) 0 48px,var(--asphalt) 48px 80px)}
+
+section{padding:5rem 0}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(1.8rem,3.6vw,2.6rem);line-height:1.2;margin:0 0 .6rem}
+.lead{color:var(--muted);max-width:56ch;margin:0 0 2.5rem}
+
+/* Product groups */
+.group + .group{margin-top:4rem}
+.group-head{display:flex;align-items:center;gap:.75rem;border-bottom:3px solid var(--ink);padding-bottom:.75rem;margin-bottom:1.5rem}
+.group-head .sig{width:14px;height:14px;border-radius:50%;background:var(--teal);flex:none}
+.group.guide .sig{background:var(--green)}
+.group-head h3{font-family:var(--display);font-weight:400;font-size:1.6rem;margin:0}
+.group-head span{color:var(--muted);font-size:.95rem;margin-left:auto}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.item{background:var(--card);border:1px solid color-mix(in srgb,var(--ink) 14%,transparent);border-left:5px solid var(--teal);border-radius:6px;padding:1.25rem 1.25rem 1.1rem}
+.group.guide .item{border-left-color:var(--green)}
+.item h4{font-size:1.12rem;margin:0 0 .35rem}
+.item p{margin:0;color:var(--muted);font-size:.94rem}
+.item.key{grid-column:span 2;background:var(--asphalt);color:var(--line);border-color:var(--asphalt)}
+.item.key p{color:rgba(244,246,245,.78)}
+.item.key h4{font-size:1.3rem}
+@media (max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.grid{grid-template-columns:1fr}.item.key{grid-column:auto}}
+
+/* Features strip */
+.features{background:var(--concrete)}
+.feat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+.feat h3{font-size:1.1rem;margin:0 0 .4rem;padding-top:.9rem;border-top:3px solid var(--teal)}
+.feat p{margin:0;color:var(--muted);font-size:.94rem}
+@media (max-width:900px){.feat-row{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.feat-row{grid-template-columns:1fr}}
+
+.cta{background:var(--teal);color:#fff;padding:4rem 0}
+.cta .wrap{display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap}
+.cta h2{margin:0}
+.cta p{margin:.5rem 0 0;opacity:.92}
+.cta .call{background:var(--asphalt);color:var(--line)}
+.cta .call:hover{background:#39414A}
+footer{background:var(--asphalt);color:rgba(244,246,245,.72);padding:2.5rem 0;font-size:.9rem}
+footer strong{color:var(--line)}
+footer p{margin:.2rem 0}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <a class="logo" href="#top">마이홈파킹 <small>My Home Parking</small></a>
+    <nav aria-label="주요 메뉴">
+      <a href="#control">주차관제</a>
+      <a href="#guide">주차유도</a>
+      <a href="#feature">서비스 특징</a>
+      <a href="#contact">문의</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <p class="brand">MY HOME PARKING</p>
+    <h1>입구 차단기부터 빈자리 안내까지, 주차장 한 곳을 통째로</h1>
+    <p>마이홈파킹은 차량번호인식, 무인정산, 주차유도 장비를 직접 공급하고 24시간 관제까지 맡는 주차 시스템 전문 브랜드입니다.</p>
+    <div class="btns">
+      <a class="call" href="tel:16883501">상담 전화 <b>1688-3501</b></a>
+      <a class="ghost" href="#control">제품 보기</a>
+    </div>
+  </div>
+</section>
+<div class="lanes" aria-hidden="true"></div>
+
+<section id="products">
+  <div class="wrap">
+    <h2>주요 제품</h2>
+    <p class="lead">현장 규모와 운영 방식에 맞춰 필요한 장비를 조합해 구성합니다.</p>
+
+    <div class="group" id="control">
+      <div class="group-head"><span class="sig"></span><h3>주차관제 시스템</h3><span>입출차 관리 · 요금 정산</span></div>
+      <div class="grid">
+        <div class="item key">
+          <h4>일체형차단기</h4>
+          <p>차량번호인식 카메라와 차단기를 한 몸체에 담은 제품입니다. 설치 공간이 좁은 아파트 출입구에도 깔끔하게 들어가고, 인식부터 개방까지 한 번에 처리합니다.</p>
+        </div>
+        <div class="item"><h4>차량번호인식기</h4><p>진입 차량의 번호판을 읽어 입주민·방문 차량을 자동으로 구분합니다.</p></div>
+        <div class="item"><h4>차량차단기</h4><p>인식 결과에 따라 출입을 통제하는 입출구용 차단기입니다.</p></div>
+        <div class="item"><h4>무인키오스크</h4><p>방문 차량 등록과 주차권 처리를 관리실 없이 현장에서 해결합니다.</p></div>
+        <div class="item"><h4>무인정산기(BF)</h4><p>휠체어 사용자도 이용하기 쉬운 배리어프리 설계의 정산기입니다.</p></div>
+        <div class="item key">
+          <h4>무인요금정산기</h4>
+          <p>상업시설과 공영주차장처럼 유료 운영이 필요한 곳에서 요금 계산과 결제를 무인으로 처리합니다. 근무 인력을 줄이면서도 누락 없는 정산이 가능합니다.</p>
+        </div>
+        <div class="item"><h4>유인요금계산기</h4><p>관리자가 상주하는 출구 부스에서 요금을 빠르게 계산합니다.</p></div>
+        <div class="item"><h4>주차관리서버</h4><p>입출차 기록, 등록 차량, 정산 내역을 한곳에 모아 관리합니다.</p></div>
+        <div class="item"><h4>VPN</h4><p>현장 장비와 관제센터를 안전하게 연결해 원격 제어를 지원합니다.</p></div>
+      </div>
+    </div>
+
+    <div class="group guide" id="guide">
+      <div class="group-head"><span class="sig"></span><h3>주차유도 시스템</h3><span>빈자리 감지 · 안내</span></div>
+      <div class="grid">
+        <div class="item key">
+          <h4>초음파센서 + 주차표시등</h4>
+          <p>주차면마다 설치한 센서가 차량 유무를 감지하고, 천장의 표시등이 빈자리를 색으로 알려 줍니다. 운전자는 멀리서도 비어 있는 칸을 바로 찾을 수 있습니다.</p>
+        </div>
+        <div class="item"><h4>구역제어기</h4><p>구역별 센서와 표시등 신호를 모아 서버로 전달합니다.</p></div>
+        <div class="item"><h4>주차유도서버</h4><p>전 구역의 주차 현황을 실시간으로 집계하고 안내판에 반영합니다.</p></div>
+        <div class="item"><h4>입구종합안내판</h4><p>주차장 입구에서 층별·구역별 잔여 면수를 한눈에 보여 줍니다.</p></div>
+        <div class="item"><h4>층별유도전광판</h4><p>각 층 진입부에서 해당 층의 남은 자리를 안내합니다.</p></div>
+        <div class="item"><h4>구역유도전광판</h4><p>통로 분기점마다 빈자리가 있는 방향으로 차량을 이끕니다.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="feature" class="features">
+  <div class="wrap">
+    <h2>설치 이후까지 책임집니다</h2>
+    <p class="lead">장비 공급에서 끝나지 않고 운영까지 함께합니다.</p>
+    <div class="feat-row">
+      <div class="feat"><h3>24시간 관제센터</h3><p>연중무휴 영상관제센터에서 원격 제어와 응대를 제공합니다.</p></div>
+      <div class="feat"><h3>관리비 절감</h3><p>유·무인 시스템으로 관리비와 인건비 부담을 줄입니다.</p></div>
+      <div class="feat"><h3>주차수익 상승</h3><p>투명한 관리와 체계적인 정산으로 초과 주차 수익을 확보합니다.</p></div>
+      <div class="feat"><h3>맞춤형 구성</h3><p>현장에 맞는 장비 조합과 운영 노하우를 제안합니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="cta">
+  <div class="wrap">
+    <div>
+      <h2>우리 단지에 맞는 구성, 상담받아 보세요</h2>
+      <p>컨택센터는 24시간 연결됩니다.</p>
+    </div>
+    <a class="call" href="tel:16883501">전화 걸기 <b>1688-3501</b></a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>마이홈파킹 My Home Parking</strong> | 더함비즈 주식회사 | 대표 안우석 | 사업자등록번호 164-86-01059</p>
+    <p>(14303) 경기도 광명시 오리로 651번길 8 현대테라타워광명 1410호</p>
+    <p>Tel. 02-2632-3230 | Fax. 02-2632-3231 | 컨택센터 24h 1688-3501</p>
+  </div>
+</footer>
+</body>
+</html>
